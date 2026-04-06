@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ibbad Ul Haq | Performance-Driven Video Editor for DTC & E-commerce Brands</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Syne:wght@500;700;800&family=Playfair+Display:ital,wght@1,600;1,700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800,400i,500i&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#000000',
+                        card: '#161616',
+                        accent: '#FF4C00',
+                        'accent-hover': '#e64400',
+                        primary: '#6d4aff',
+                        border: '#2a2a2a',
+                        muted: '#888888'
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                        cursive: ['Playfair Display', 'serif'],
+                        satoshi: ['Satoshi', 'sans-serif'],
+                        'instrument': ['"Instrument Serif"', 'serif'],
+                    },
+                    animation: {
+                        'grain': 'grain 8s steps(10) infinite',
+                        'fade-in': 'fadeIn 0.4s ease-out forwards',
+                    },
+                    keyframes: {
+                        grain: {
+                            '0%, 100%': { transform: 'translate(0, 0)' },
+                            '10%': { transform: 'translate(-5%, -10%)' },
+                            '20%': { transform: 'translate(-15%, 5%)' },
+                            '30%': { transform: 'translate(7%, -25%)' },
+                            '40%': { transform: 'translate(-5%, 25%)' },
+                            '50%': { transform: 'translate(-15%, 10%)' },
+                            '60%': { transform: 'translate(15%, 0%)' },
+                            '70%': { transform: 'translate(0%, 15%)' },
+                            '80%': { transform: 'translate(3%, 35%)' },
+                            '90%': { transform: 'translate(-10%, 10%)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(15px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        html {
+            overflow-x: hidden;
+        }
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Subtle Grain Overlay */
+        .bg-noise {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            width: 200%;
+            height: 200vh;
+            background: transparent url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Marquee Animations */
+        @keyframes infinite-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* Vertical Scroll Animations */
+        @keyframes scroll-up {
+            from { transform: translateY(0); }
+            to { transform: translateY(-50%); }
+        }
+        @keyframes scroll-down {
+            from { transform: translateY(-50%); }
+            to { transform: translateY(0); }
+        }
+        .testimonial-track {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .scroll-up .testimonial-track {
+            animation: scroll-up 30s linear infinite;
+        }
+        .scroll-down .testimonial-track {
+            animation: scroll-down 30s linear infinite;
+        }
+        .testimonial-col:hover .testimonial-track {
+            animation-play-state: paused;
+        }
+
+        /* Mobile horizontal testimonials */
+        @keyframes scroll-left {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        .testimonial-mobile-track {
+            display: flex;
+            gap: 1rem;
+            animation: scroll-left 25s linear infinite;
+        }
+        .testimonial-mobile-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* FAQ Accordion */
+        .faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+        }
+        .faq-item.open .faq-glow {
+            opacity: 1;
+        }
+        .faq-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(109,74,255,0.25) 0%, rgba(109,74,255,0.05) 60%, transparent 100%);
+            border-radius: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .faq-item.open .faq-question span {
+            color: #7a5af8;
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Schedule Button Particles */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: transform 12s ease-out, opacity 0.3s;
+        }
+        #schedule-btn:hover #particles-container {
+            opacity: 1;
+        }
+        #schedule-btn:hover .particle {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="font-inter antialiased selection:bg-accent selection:text-white relative">
+
+    <!-- NAVBAR: Default (full width) -->
+    <nav class="fixed w-full z-40 top-0 transition-all duration-500" id="navbar">
+        <!-- DEFAULT HEADER (visible at top) -->
+        <div id="nav-default" class="bg-transparent transition-all duration-500">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex items-center justify-between py-4">
+                    <!-- Social Icons -->
+                    <div class="flex items-center gap-3">
+                        <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-white/40 transition">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-white/40 transition">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                    </div>
+                    <!-- Logo -->
+                    <div class="absolute left-1/2 -translate-x-1/2">
+                        <a href="#" class="text-white hover:opacity-80 transition"><i data-lucide="fast-forward" class="w-8 h-8 fill-white"></i></a>
+                    </div>
+                    <!-- Right Button -->
+                    <div class="hidden md:flex">
+                        <div class="border border-[#ffffff0f] rounded-[14px] p-2 shadow-[inset_0_0_10px_rgba(255,255,255,0.06)]">
+                            <a href="#schedule" id="schedule-btn" class="relative block text-white px-6 py-3 rounded-lg text-[18px] font-satoshi font-bold tracking-[-0.03em] leading-[1.5em] transition-all shadow-[0_0_10px_rgba(0,0,0,0.5)] overflow-hidden" style="background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255,255,255,0.06);">
+                                <span class="relative z-10">Schedule a Meeting</span>
+                                <div id="particles-container" class="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobile-menu-btn" class="md:hidden text-white p-2"><i data-lucide="menu"></i></button>
+                </div>
+                <!-- Nav Links -->
+                <div class="hidden md:flex items-center justify-center gap-10 pb-4 font-satoshi text-[15px] font-medium text-white">
+                    <a href="#about" class="hover:text-white/70 transition-colors">About Us</a>
+                    <a href="#comparison" class="hover:text-white/70 transition-colors">Services</a>
+                    <a href="#portfolio" class="hover:text-white/70 transition-colors">Portfolio</a>
+                    <a href="#process" class="hover:text-white/70 transition-colors">Process</a>
+                    <a href="#pricing" class="hover:text-white/70 transition-colors">Pricing</a>
+                    <a href="#faqs" class="hover:text-white/70 transition-colors">Faqs</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCROLLED HEADER (floating pill, hidden by default) -->
+        <div id="nav-scrolled" class="hidden absolute top-4 left-1/2 -translate-x-1/2 w-auto transition-all duration-500">
+            <div class="flex items-center gap-6 md:gap-8 bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 rounded-full px-4 py-2.5 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+                <!-- Logo -->
+                <a href="#" class="text-white hover:opacity-80 transition shrink-0 pl-1">
+                    <i data-lucide="fast-forward" class="w-6 h-6 fill-white"></i>
+                </a>
+                <!-- Nav Links -->
+                <div class="hidden md:flex items-center gap-6 font-satoshi text-[14px] font-medium text-white whitespace-nowrap">
+                    <a href="#about" class="hover:text-white/70 transition-colors">About Us</a>
+                    <a href="#comparison" class="hover:text-white/70 transition-colors">Services</a>
+                    <a href="#portfolio" class="hover:text-white/70 transition-colors">Portfolio</a>
+                    <a href="#process" class="hover:text-white/70 transition-colors">Process</a>
+                    <a href="#pricing" class="hover:text-white/70 transition-colors">Pricing</a>
+                    <a href="#faqs" class="hover:text-white/70 transition-colors">Faqs</a>
+                </div>
+                <!-- Book a Call -->
+                <a href="#schedule" class="bg-primary text-white px-5 py-2 rounded-full text-[13px] font-satoshi font-semibold flex items-center gap-2 hover:bg-[#5b3ce0] transition-colors shrink-0 whitespace-nowrap">
+                    Book a Call
+                    <svg class="w-3.5 h-3.5 fill-white" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark border-t border-white/5 absolute w-full left-0 flex flex-col px-6 py-4 gap-4 top-full">
+            <a href="#about" class="mobile-link text-white/70 hover:text-white py-2 font-satoshi text-[14px]">About Us</a>
+            <a href="#portfolio" class="mobile-link text-white/70 hover:text-white py-2 font-satoshi text-[14px]">Portfolio</a>
+            <a href="#process" class="mobile-link text-white/70 hover:text-white py-2 font-satoshi text-[14px]">Process</a>
+            <a href="#pricing" class="mobile-link text-white/70 hover:text-white py-2 font-satoshi text-[14px]">Pricing</a>
+            <a href="#faqs" class="mobile-link text-white/70 hover:text-white py-2 font-satoshi text-[14px]">Faqs</a>
+            <a href="#schedule" class="bg-primary text-white text-center px-6 py-3 rounded-full font-satoshi font-medium text-[14px] mt-2 flex items-center justify-center gap-2">
+                Book a Call
+                <i data-lucide="phone" class="w-3.5 h-3.5 fill-white"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-40 pb-10" id="home">
+
+        <!-- Purple glow blob — top right, spans navbar into hero -->
+        <div class="absolute -top-[200px] -right-[100px] w-[700px] h-[700px] bg-primary/30 rounded-full blur-[180px] pointer-events-none z-[1]"></div>
+
+        <div class="max-w-[1200px] mx-auto px-6 w-full relative z-[2]">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:gap-10">
+
+                <!-- Left Text Content -->
+                <div class="lg:w-[42%] flex flex-col justify-center mb-10 lg:mb-0">
+                    <div>
+                        <span class="block font-satoshi font-medium text-[#999999] text-[14px] md:text-[15px] uppercase tracking-widest mb-3">Performance Video Editor</span>
+                        <span class="block font-satoshi font-semibold text-white text-[42px] md:text-[50px] leading-[42px] mb-2">Ibbad Ul Haq</span>
+                        <span class="block font-instrument italic text-[#765eff] text-[22px] md:text-[26px] leading-[30px] mt-2 mb-4">Performance-Driven Video Editor for DTC &amp; E-commerce Brands</span>
+                    </div>
+                    <p class="mt-2 font-satoshi font-medium text-[#999999] text-[14px] md:text-[15px] leading-[22px] max-w-[400px]">
+                        I specialize in creating high-retention videos for DTC and e-commerce brands, as well as top content creators. My work has helped brands generate over $1M in sales through performance-driven ads.
+                    </p>
+                    <!-- Hero Stats -->
+                    <div class="flex items-center gap-8 mt-6">
+                        <div class="flex flex-col">
+                            <span class="font-satoshi font-bold text-white text-[28px] leading-[1]">$1M+</span>
+                            <span class="font-satoshi text-[#999] text-[12px] mt-1">Sales Generated</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-satoshi font-bold text-white text-[28px] leading-[1]">792K+</span>
+                            <span class="font-satoshi text-[#999] text-[12px] mt-1">Followers Gained</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-satoshi font-bold text-white text-[28px] leading-[1]">2.5x+</span>
+                            <span class="font-satoshi text-[#999] text-[12px] mt-1">Avg ROAS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Video + CTAs -->
+                <div class="lg:w-[58%] flex flex-col relative z-10">
+                    <!-- Video Thumbnail with subtle gradient border -->
+                    <div class="relative w-full aspect-[16/9] rounded-2xl p-[2px] bg-gradient-to-br from-purple-500/40 via-white/5 to-cyan-400/20">
+                        <div class="relative w-full h-full rounded-[14px] overflow-hidden bg-black">
+                            <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover" alt="Video Thumbnail">
+
+                            <!-- Center Play Button -->
+                            <div class="absolute inset-0 flex items-center justify-center z-20">
+                                <div class="w-14 h-14 md:w-[72px] md:h-[72px] bg-black/30 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20 cursor-pointer hover:bg-black/50 hover:scale-105 transition-all">
+                                    <svg class="w-7 h-7 md:w-8 md:h-8 text-white ml-1 fill-white" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons Below Video -->
+                    <div class="w-full flex justify-between items-center mt-5">
+                        <a href="#schedule" class="bg-[#765eff] text-white px-6 py-2.5 rounded-lg font-satoshi font-semibold flex items-center gap-2 hover:bg-[#6347ef] transition-colors text-[15px]">
+                            Get a Free Quote
+                            <svg class="w-4 h-4 fill-none stroke-white" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </a>
+                        <a href="#portfolio" class="text-white font-satoshi font-bold italic text-[15px] hover:text-gray-300 transition-colors">
+                            View My Work
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- WhatsApp Floating Button -->
+        <a href="https://wa.me/923360744894" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-50">
+            <svg class="w-7 h-7 text-white fill-white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+    </section>
+
+    <!-- OUR CLIENTS SECTION -->
+    <section class="py-8 md:py-12 bg-dark relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center reveal mb-10 md:mb-14">
+            <div class="inline-flex items-center justify-center px-4 py-1.5 border border-white/10 rounded-full text-[11px] uppercase tracking-widest font-semibold text-white/70 mb-6 bg-white/5 backdrop-blur-sm">
+                Clients
+            </div>
+            <h2 class="font-inter font-medium text-4xl md:text-5xl text-white tracking-tight">Our Clients</h2>
+        </div>
+
+        <!-- Marquee Track -->
+        <div class="max-w-[1200px] mx-auto w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_10%,_black_90%,transparent_100%)]">
+            <ul class="flex items-center [&_li]:mx-4 md:[&_li]:mx-6 animate-[infinite-scroll_35s_linear_infinite] whitespace-nowrap w-max">
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop" alt="Client 1" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        1.26 million
+                    </div>
+                </li>
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0 bg-[#f3e7de] flex items-center justify-center relative">
+                        <div class="flex flex-col gap-1 -rotate-90 scale-125 text-[#1a1a1a]">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="opacity-90"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        26.4 K
+                    </div>
+                </li>
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0 bg-white flex items-center justify-center">
+                        <span class="font-inter font-bold text-[#1a1a1a] text-sm md:text-base tracking-tight leading-none px-2">Sinus<span class="text-[#e25050]">Doctor</span></span>
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        46.6 K
+                    </div>
+                </li>
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1615109398623-88346a601842?w=200&h=200&fit=crop" alt="Client 4" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        11.2 K
+                    </div>
+                </li>
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop" alt="Client 5" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        161 K
+                    </div>
+                </li>
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop" alt="Client 6" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        177 K
+                    </div>
+                </li>
+                
+                <!-- Duplicates -->
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop" alt="Client 1" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        1.26 million
+                    </div>
+                </li>
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0 bg-[#f3e7de] flex items-center justify-center relative">
+                        <div class="flex flex-col gap-1 -rotate-90 scale-125 text-[#1a1a1a]">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="opacity-90"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        26.4 K
+                    </div>
+                </li>
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0 bg-white flex items-center justify-center">
+                        <span class="font-inter font-bold text-[#1a1a1a] text-sm md:text-base tracking-tight leading-none px-2">Sinus<span class="text-[#e25050]">Doctor</span></span>
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        46.6 K
+                    </div>
+                </li>
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1615109398623-88346a601842?w=200&h=200&fit=crop" alt="Client 4" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        11.2 K
+                    </div>
+                </li>
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop" alt="Client 5" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        161 K
+                    </div>
+                </li>
+                <li class="flex flex-col items-center gap-5">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop" alt="Client 6" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-2 text-muted text-sm font-medium">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#FF0000] fill-[#FF0000]"></i>
+                        177 K
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- VIDEO TESTIMONIALS SECTION -->
+    <section class="py-16 md:py-20 bg-dark relative" id="video-testimonials">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <!-- Heading -->
+            <div class="text-center mb-10 md:mb-14 reveal">
+                <h2 class="font-satoshi font-bold text-3xl md:text-4xl lg:text-5xl text-white tracking-tight mb-4">
+                    Hear it directly from <span class="font-instrument italic text-primary font-normal">our clients</span>
+                </h2>
+                <p class="text-[#999] font-satoshi italic text-sm md:text-[15px] max-w-xl mx-auto leading-relaxed">
+                    Hear what our clients have to say. Our testimonials reflect the satisfaction our clients have in our services.
+                </p>
+            </div>
+
+            <!-- Video Testimonial Cards -->
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto reveal" style="transition-delay: 0.2s">
+
+                <!-- Card 1 -->
+                <div class="relative bg-[#111] border border-white/10 rounded-2xl p-5 md:p-6 flex flex-col gap-5 group overflow-hidden">
+                    <!-- Purple gradient glow at bottom -->
+                    <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-primary/50 to-transparent pointer-events-none z-0"></div>
+
+                    <!-- Video thumbnail -->
+                    <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden z-10 border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=500&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Video testimonial">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-14 h-14 bg-black/30 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20">
+                                <svg class="w-6 h-6 text-white ml-1 fill-white" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Text -->
+                    <p class="text-white/90 font-satoshi text-[15px] leading-[1.6] z-10">
+                        I've used Ibbad and his team for 2-3 months, creating 40-50 amazing videos. They handle everything efficiently and communicate well.
+                    </p>
+
+                    <!-- Author -->
+                    <div class="flex items-center gap-3 mt-auto z-10">
+                        <div class="w-10 h-10 rounded-full p-[2px] bg-gradient-to-br from-orange-400 via-primary to-blue-500 shrink-0">
+                            <div class="w-full h-full rounded-full overflow-hidden border-2 border-[#111]">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" class="w-full h-full object-cover" alt="Jimmy Conover">
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-satoshi font-bold text-sm">Jimmy Conover</h4>
+                            <p class="text-[#999] text-xs">Founder @ Scale Video Agency</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="relative bg-[#111] border border-white/10 rounded-2xl p-5 md:p-6 flex flex-col gap-5 group overflow-hidden">
+                    <!-- Purple gradient glow at bottom -->
+                    <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-primary/50 to-transparent pointer-events-none z-0"></div>
+
+                    <!-- Video thumbnail -->
+                    <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden z-10 border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=500&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Video testimonial">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-14 h-14 bg-black/30 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20">
+                                <svg class="w-6 h-6 text-white ml-1 fill-white" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Text -->
+                    <p class="text-white/90 font-satoshi text-[15px] leading-[1.6] z-10">
+                        I've used Ibbad and his team for 2-3 months, creating 40-50 amazing videos. They handle everything efficiently and communicate well.
+                    </p>
+
+                    <!-- Author -->
+                    <div class="flex items-center gap-3 mt-auto z-10">
+                        <div class="w-10 h-10 rounded-full p-[2px] bg-gradient-to-br from-orange-400 via-primary to-blue-500 shrink-0">
+                            <div class="w-full h-full rounded-full overflow-hidden border-2 border-[#111]">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" class="w-full h-full object-cover" alt="Jimmy Conover">
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-satoshi font-bold text-sm">Jimmy Conover</h4>
+                            <p class="text-[#999] text-xs">Founder @ Scale Video Agency</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="py-16 md:py-20 bg-dark relative flex flex-col items-center justify-center text-center px-6 border-t border-border/30" id="about">
+        <div class="reveal max-w-5xl mx-auto flex flex-col items-center">
+            <div class="inline-flex items-center justify-center px-5 py-2 border border-white/10 rounded-xl text-xs md:text-sm font-satoshi font-medium text-white mb-8 md:mb-12 bg-black/40 hover:bg-white/5 transition-colors cursor-default">
+                About Me
+            </div>
+            <h2 class="font-satoshi font-medium text-[28px] md:text-[40px] lg:text-[44px] text-white leading-[1.4] md:leading-[1.5] tracking-tight mb-6 md:mb-8 max-w-[900px]">
+                I specialize in creating <span class="font-instrument italic text-[#7a5af8] pr-1 font-normal">high-retention videos</span> for DTC and e-commerce brands. My focus on <span class="font-instrument italic text-[#7a5af8] pr-1 font-normal">attention-grabbing hooks</span>, sharp pacing, and platform-specific editing ensures videos keep viewers engaged from <span class="font-instrument italic text-[#7a5af8] pr-1 font-normal">start to finish</span>.
+            </h2>
+            <p class="font-satoshi italic text-[#999] text-[15px] md:text-[17px] leading-relaxed mb-8 max-w-[700px]">
+                If a video doesn't captivate viewers and hold their attention from the very first second, it simply doesn't make the cut.
+            </p>
+            <a href="#schedule" class="bg-[#7a5af8] text-white font-satoshi font-bold text-base md:text-lg px-8 py-3.5 rounded-xl flex items-center gap-2.5 hover:bg-[#6847ef] transition-all duration-300">
+                Get a Free Quote Now
+                <svg class="w-4 h-4 fill-none stroke-white" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION (Interactive Tabs) -->
+    <section class="py-16 md:py-20 bg-dark relative border-t border-border/30" id="portfolio">
+        <div class="reveal max-w-6xl mx-auto px-6 flex flex-col items-center">
+
+            <div class="inline-flex items-center justify-center px-4 py-1.5 border border-white/10 rounded-lg text-xs md:text-[13px] font-medium text-white mb-6 md:mb-8 bg-transparent cursor-default">
+                Portfolio
+            </div>
+            <h2 class="font-inter font-medium text-4xl md:text-5xl text-white mb-12 tracking-tight">
+                Portfolio
+            </h2>
+
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-10 md:mb-14">
+                <button onclick="switchTab('long-form')" id="tab-long-form" class="tab-btn px-5 md:px-8 py-2.5 md:py-3 rounded-xl font-inter font-semibold text-sm md:text-base text-white transition-all duration-300 bg-gradient-to-r from-[#7a5af8] to-[#4c2bb3] opacity-100 shadow-[0_0_20px_rgba(122,90,248,0.4)]">
+                    Long-form videos
+                </button>
+                <button onclick="switchTab('short-form')" id="tab-short-form" class="tab-btn px-5 md:px-8 py-2.5 md:py-3 rounded-xl font-inter font-semibold text-sm md:text-base text-white transition-all duration-300 bg-gradient-to-r from-[#7a5af8] to-[#4c2bb3] opacity-50 hover:opacity-80">
+                    Short form videos
+                </button>
+                <button onclick="switchTab('faceless')" id="tab-faceless" class="tab-btn px-5 md:px-8 py-2.5 md:py-3 rounded-xl font-inter font-semibold text-sm md:text-base text-white transition-all duration-300 bg-gradient-to-r from-[#7a5af8] to-[#4c2bb3] opacity-50 hover:opacity-80">
+                    Faceless videos
+                </button>
+            </div>
+
+            <!-- Content Container: Long-form videos -->
+            <div id="content-long-form" class="tab-content w-full flex flex-col items-center animate-fade-in">
+                <!-- Large Video Featured -->
+                <div class="mb-12 w-full max-w-4xl flex flex-col items-center text-center">
+                    <h3 class="text-3xl md:text-4xl text-white font-medium mb-2 tracking-tight">Anthony Bertoncin</h3>
+                    <p class="text-muted text-sm mb-8">CEO @anthonybertoncinyt</p>
+                    <div class="relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 group cursor-pointer shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1000&h=562&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Video thumbnail">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                            <i data-lucide="play" class="w-16 h-16 md:w-20 md:h-20 text-white/90 drop-shadow-lg fill-white/80 group-hover:scale-110 transition-transform"></i>
+                            <div class="absolute top-8 left-8 bg-white text-dark font-bold px-6 py-4 rounded-xl hidden md:block">
+                                <span class="text-gray-500 text-sm font-medium block">Followers</span>
+                                <span class="text-4xl">1.9 M</span>
+                                <div class="inline-flex items-center justify-center w-8 h-8 bg-green-500 rounded-full text-white ml-2">
+                                    <i data-lucide="arrow-up" class="w-5 h-5"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grid of 2 Smaller Videos -->
+                <div class="grid md:grid-cols-2 gap-8 w-full max-w-5xl mb-16">
+                     <div class="flex flex-col items-center text-center">
+                         <h3 class="text-2xl text-white font-medium mb-1 tracking-tight">Ibbad Ul Haq</h3>
+                         <p class="text-muted text-sm mb-6">CEO @IbbadStudio</p>
+                         <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 group cursor-pointer shadow-lg">
+                             <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=337&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Working">
+                             <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
+                                 <i data-lucide="play" class="w-12 h-12 text-white/90 drop-shadow-lg fill-white/80 group-hover:scale-110 transition-transform"></i>
+                             </div>
+                             <div class="absolute bottom-6 left-0 right-0 text-center pointer-events-none">
+                                <h4 class="text-4xl font-bold tracking-widest text-transparent" style="-webkit-text-stroke: 1px white;">WORKING</h4>
+                             </div>
+                         </div>
+                     </div>
+                     
+                     <div class="flex flex-col items-center text-center">
+                         <h3 class="text-2xl text-white font-medium mb-1 tracking-tight">Ibbad Ul Haq</h3>
+                         <p class="text-muted text-sm mb-6">CEO @IbbadStudio</p>
+                         <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 group cursor-pointer shadow-lg">
+                             <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32b7?w=600&h=337&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Suit in space">
+                             <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
+                                 <i data-lucide="play" class="w-12 h-12 text-white/90 drop-shadow-lg fill-white/80 group-hover:scale-110 transition-transform"></i>
+                             </div>
+                         </div>
+                     </div>
+                </div>
+
+                <a href="#contact" class="bg-[#7a5af8] text-white font-inter italic font-bold text-sm md:text-base px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-[#6847ef] transition-all duration-300">
+                    Book a Call
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </a>
+            </div>
+
+            <!-- Content Container: Short-form videos -->
+            <div id="content-short-form" class="tab-content w-full hidden flex-col items-center animate-fade-in">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-4xl mb-16">
+                    <!-- Cards omitted for brevity in structural view but kept in actual implementation below -->
+                    <div class="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer border border-white/10 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=711&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Short 1">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
+                            <i data-lucide="play" class="w-10 h-10 md:w-12 md:h-12 text-white/90 drop-shadow-lg fill-white/80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-white font-syne font-bold text-xl md:text-3xl text-center leading-[1.1] uppercase tracking-tighter">YOUNGEST<br>AND FASTEST</h4>
+                        </div>
+                    </div>
+                    <div class="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer border border-white/10 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?w=400&h=711&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Short 2">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
+                            <i data-lucide="play" class="w-10 h-10 md:w-12 md:h-12 text-white/90 drop-shadow-lg fill-white/80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-white font-syne font-bold text-xl md:text-3xl text-center leading-[1.1] uppercase tracking-tighter">CLIENTS</h4>
+                        </div>
+                    </div>
+                    <div class="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer border border-white/10 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=711&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Short 3">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
+                            <i data-lucide="play" class="w-10 h-10 md:w-12 md:h-12 text-white/90 drop-shadow-lg fill-white/80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-white font-syne font-bold text-xl md:text-3xl text-center leading-[1.1] uppercase tracking-tighter">JUST</h4>
+                        </div>
+                    </div>
+                    <div class="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer border border-white/10 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=711&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Short 4">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
+                            <i data-lucide="play" class="w-10 h-10 md:w-12 md:h-12 text-white/90 drop-shadow-lg fill-white/80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-white font-syne font-bold text-xl md:text-3xl text-center leading-[1.1] uppercase tracking-tighter">YOUNGEST<br>AND FASTEST</h4>
+                        </div>
+                    </div>
+                    <div class="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer border border-white/10 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?w=400&h=711&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Short 5">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
+                            <i data-lucide="play" class="w-10 h-10 md:w-12 md:h-12 text-white/90 drop-shadow-lg fill-white/80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-white font-syne font-bold text-xl md:text-3xl text-center leading-[1.1] uppercase tracking-tighter">CLIENTS</h4>
+                        </div>
+                    </div>
+                    <div class="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer border border-white/10 shadow-lg hidden md:block">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=711&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Short 6">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
+                            <i data-lucide="play" class="w-10 h-10 md:w-12 md:h-12 text-white/90 drop-shadow-lg fill-white/80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-white font-syne font-bold text-xl md:text-3xl text-center leading-[1.1] uppercase tracking-tighter">JUST</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#contact" class="bg-[#7a5af8] text-white font-inter italic font-bold text-sm md:text-base px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-[#6847ef] transition-all duration-300">
+                    Book a Call
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </a>
+            </div>
+
+            <!-- Content Container: Faceless videos -->
+            <div id="content-faceless" class="tab-content w-full hidden flex-col items-center animate-fade-in">
+                <div class="mb-12 w-full max-w-4xl flex flex-col items-center text-center">
+                    <h3 class="text-3xl md:text-4xl text-white font-medium mb-2 tracking-tight">In gods We Trust</h3>
+                    <p class="text-muted text-sm mb-8">CEO @InthegodsWeTrust</p>
+                    <div class="relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 group cursor-pointer shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1000&h=562&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Video thumbnail">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                            <i data-lucide="play" class="w-16 h-16 md:w-20 md:h-20 text-white/90 drop-shadow-lg fill-white/80 group-hover:scale-110 transition-transform"></i>
+                            
+                            <div class="absolute top-6 left-6 md:top-8 md:left-8 text-left pointer-events-none drop-shadow-md">
+                                <h4 class="text-white font-bold text-2xl md:text-5xl uppercase tracking-tighter" style="-webkit-text-stroke: 1px cyan;">NO MORE</h4>
+                                <h4 class="text-cyan-400 font-bold text-2xl md:text-5xl uppercase tracking-tighter" style="-webkit-text-stroke: 1px black;">HUMANS</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 w-full max-w-5xl mb-16">
+                     <div class="flex flex-col items-center text-center">
+                         <h3 class="text-2xl text-white font-medium mb-1 tracking-tight">Ibbad Ul Haq</h3>
+                         <p class="text-muted text-sm mb-6">CEO @IbbadStudio</p>
+                         <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 group cursor-pointer shadow-lg">
+                             <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=337&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Working">
+                             <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
+                                 <i data-lucide="play" class="w-12 h-12 text-white/90 drop-shadow-lg fill-white/80 group-hover:scale-110 transition-transform"></i>
+                             </div>
+                         </div>
+                     </div>
+                     
+                     <div class="flex flex-col items-center text-center">
+                         <h3 class="text-2xl text-white font-medium mb-1 tracking-tight">Dylan Hey</h3>
+                         <p class="text-muted text-sm mb-6">CEO @ Hey Digital</p>
+                         <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 group cursor-pointer shadow-lg">
+                             <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=337&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Forex Bootcamp">
+                             <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
+                                 <i data-lucide="play" class="w-12 h-12 text-white/90 drop-shadow-lg fill-white/80 group-hover:scale-110 transition-transform"></i>
+                             </div>
+                             <div class="absolute bottom-4 right-4 pointer-events-none drop-shadow-lg text-right">
+                                <h4 class="text-green-400 font-bold text-2xl uppercase tracking-tighter" style="-webkit-text-stroke: 1px black;">FREE 3 DAY</h4>
+                                <h4 class="text-white font-bold text-xl uppercase tracking-tighter" style="-webkit-text-stroke: 1px black;">FOREX TRADING</h4>
+                             </div>
+                         </div>
+                     </div>
+                </div>
+
+                <a href="#contact" class="bg-[#7a5af8] text-white font-inter italic font-bold text-sm md:text-base px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-[#6847ef] transition-all duration-300">
+                    Book a Call
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- COMPARISON SECTION -->
+    <section class="py-16 md:py-20 bg-dark relative overflow-hidden" id="comparison">
+        <!-- Left purple glow -->
+        <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-primary/40 rounded-full blur-[150px] pointer-events-none -translate-x-1/2 -translate-y-1/4"></div>
+
+        <div class="max-w-[1200px] mx-auto px-6 reveal relative z-10 flex flex-col items-center">
+            <!-- Pill -->
+            <div class="inline-flex items-center justify-center px-4 py-1.5 border border-white/10 rounded-lg text-[13px] font-satoshi font-medium text-white mb-5 bg-transparent">Comparison</div>
+            <!-- Heading -->
+            <h2 class="font-satoshi font-bold text-3xl md:text-4xl lg:text-5xl text-white mb-12 tracking-tight text-center">Why Work With Us?</h2>
+
+            <!-- Two column comparison -->
+            <div class="grid md:grid-cols-2 gap-0 w-full max-w-4xl">
+                <!-- Other Agencies -->
+                <div class="flex flex-col">
+                    <h3 class="font-instrument italic text-2xl md:text-[28px] text-[#999] mb-6 text-center">Other Agencies</h3>
+                    <div class="bg-[#0c0c0c] border border-white/5 rounded-l-2xl md:rounded-l-2xl rounded-r-none p-8 md:p-10 flex-grow border-r-0">
+                        <ul class="space-y-5">
+                            <li class="flex items-center gap-3 text-[#999]">
+                                <svg class="w-4 h-4 text-[#666] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span class="font-satoshi text-[15px]">Slow communication</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-[#999]">
+                                <svg class="w-4 h-4 text-[#666] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span class="font-satoshi text-[15px]">Single channel approach</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-[#999]">
+                                <svg class="w-4 h-4 text-[#666] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span class="font-satoshi text-[15px]">Outdated growth strategies</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-[#999]">
+                                <svg class="w-4 h-4 text-[#666] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span class="font-satoshi text-[15px]">Lack of industry research</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-[#999]">
+                                <svg class="w-4 h-4 text-[#666] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span class="font-satoshi text-[15px]">Outsourced to mediocre talent</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ibbad Ul Haq -->
+                <div class="flex flex-col">
+                    <h3 class="font-instrument italic text-2xl md:text-[28px] text-primary mb-6 text-center">Ibbad Ul Haq</h3>
+                    <div class="relative bg-[#0c0c0c] border border-white/10 rounded-r-2xl md:rounded-r-2xl rounded-l-none p-8 md:p-10 flex-grow overflow-hidden">
+                        <!-- Purple glow inside card -->
+                        <div class="absolute top-0 right-0 w-[200px] h-[200px] bg-primary/40 rounded-full blur-[80px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
+                        <ul class="space-y-5 relative z-10">
+                            <li class="flex items-center gap-3 text-white">
+                                <svg class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span class="font-satoshi font-bold text-[15px]">Constant, proactive communication</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-white">
+                                <svg class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span class="font-satoshi font-bold text-[15px]">Omni-channel approach</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-white">
+                                <svg class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span class="font-satoshi font-bold text-[15px]">Tailored best-fit solutions</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-white">
+                                <svg class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span class="font-satoshi font-bold text-[15px]">Provides industry specific expertise</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-white">
+                                <svg class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span class="font-satoshi font-bold text-[15px]">Experts with 4+ years of experience</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEXT TESTIMONIALS SECTION -->
+    <section class="py-16 md:py-20 bg-dark relative overflow-hidden" id="reviews">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+            <div class="inline-flex items-center justify-center px-4 py-1.5 border border-white/10 rounded-lg text-xs md:text-[13px] font-satoshi font-medium text-white mb-6 md:mb-8 bg-transparent">Testimonials</div>
+            <h2 class="font-satoshi font-bold text-[28px] md:text-[44px] lg:text-[56px] text-white leading-tight tracking-tight mb-10 md:mb-16 text-center">Hear from our Clients</h2>
+            <!-- Mobile: Horizontal scrolling marquee -->
+            <div class="md:hidden w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)]">
+                <div class="testimonial-mobile-track w-max">
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">I had some doubts at first but after I saw the first sample I was blown away! Phenomenal video editor right here. Definitely recommend</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="connan92"><span class="text-white font-bold text-xs">connan92</span></div></div>
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">This man doesn't deserve 5 stars, he deserves 100 stars. This man need an Oscar! The best of the best. Ibbad is the best!</p><div class="flex items-center gap-3 mt-1"><div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 text-sm font-bold border border-yellow-500/20">🎬</div><span class="text-white font-bold text-xs">andypr_787</span></div></div>
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">I enjoyed working with Ibbad and his team. They took the time to help me get started on this project and find my style.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="driesvdb"><span class="text-white font-bold text-xs">driesvdb</span></div></div>
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">Ibbad's work is top tier. The project and work he did far exceeded what I was expecting. Will definitely be on-going!</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="kierannycla"><span class="text-white font-bold text-xs">kierannycla</span></div></div>
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">This is my first job with Ibbad and I am already planning to bring him six more! He is so professional and committed.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="jmhowethp"><span class="text-white font-bold text-xs">jmhowethp</span></div></div>
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">All I can say is WOW. The quality of work was above and beyond. HIGHLY recommended.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="joshbrindley516"><span class="text-white font-bold text-xs">joshbrindley516</span></div></div>
+                    <!-- Duplicates for seamless loop -->
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">I had some doubts at first but after I saw the first sample I was blown away! Phenomenal video editor right here. Definitely recommend</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="connan92"><span class="text-white font-bold text-xs">connan92</span></div></div>
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">This man doesn't deserve 5 stars, he deserves 100 stars. This man need an Oscar! The best of the best. Ibbad is the best!</p><div class="flex items-center gap-3 mt-1"><div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 text-sm font-bold border border-yellow-500/20">🎬</div><span class="text-white font-bold text-xs">andypr_787</span></div></div>
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">I enjoyed working with Ibbad and his team. They took the time to help me get started on this project and find my style.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="driesvdb"><span class="text-white font-bold text-xs">driesvdb</span></div></div>
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">Ibbad's work is top tier. The project and work he did far exceeded what I was expecting. Will definitely be on-going!</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="kierannycla"><span class="text-white font-bold text-xs">kierannycla</span></div></div>
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">This is my first job with Ibbad and I am already planning to bring him six more! He is so professional and committed.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="jmhowethp"><span class="text-white font-bold text-xs">jmhowethp</span></div></div>
+                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">All I can say is WOW. The quality of work was above and beyond. HIGHLY recommended.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="joshbrindley516"><span class="text-white font-bold text-xs">joshbrindley516</span></div></div>
+                </div>
+            </div>
+
+            <!-- Desktop: Vertical scrolling 3 columns -->
+            <div class="hidden md:grid relative w-full h-[600px] grid-cols-3 gap-6 [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]">
+                <div class="testimonial-col scroll-up overflow-hidden">
+                    <div class="testimonial-track">
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">I had some doubts at first but after I saw the first sample I was blown away! Phenomenal video editor right here. He's a little expensive but will definitely get the job done. Definitely recommend</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop" class="w-9 h-9 rounded-full object-cover shrink-0" alt="connan92"><span class="text-white font-bold text-sm">connan92</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">I want to talk with Fiverr to take them into a Court in USA. Because this man doesn't deserve 5 stars, he deserves 100 stars. This man need an Oscar! The best of the best. I'm a repeated customer of him. Never disappoint! Are you struggling looking for video editing? Don't lose more time. Ibbad is the best!</p><div class="flex items-center gap-3 mt-1"><div class="w-9 h-9 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 text-lg font-bold border border-yellow-500/20">🎬</div><span class="text-white font-bold text-sm">andypr_787</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">I had some doubts at first but after I saw the first sample I was blown away! Phenomenal video editor right here. He's a little expensive but will definitely get the job done. Definitely recommend</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop" class="w-9 h-9 rounded-full object-cover shrink-0" alt="connan92"><span class="text-white font-bold text-sm">connan92</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">I want to talk with Fiverr to take them into a Court in USA. Because this man doesn't deserve 5 stars, he deserves 100 stars. This man need an Oscar! The best of the best. I'm a repeated customer of him. Never disappoint! Are you struggling looking for video editing? Don't lose more time. Ibbad is the best!</p><div class="flex items-center gap-3 mt-1"><div class="w-9 h-9 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 text-lg font-bold border border-yellow-500/20">🎬</div><span class="text-white font-bold text-sm">andypr_787</span></div></div>
+                    </div>
+                </div>
+                <div class="testimonial-col scroll-down overflow-hidden">
+                    <div class="testimonial-track">
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">I enjoyed working with Ibbad and his team. They took the time to help me get started on this project and find my style. I hope this becomes a long-term cooperation.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop" class="w-9 h-9 rounded-full object-cover shrink-0" alt="driesvdb"><span class="text-white font-bold text-sm">driesvdb</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">I've used Fiverr for several years and I can honestly say that Ibbad's work is top tier. In all aspects, the project and work he did far exceeded what I was expecting. Absolutely happy I chose to work with this seller! Will definitely be on-going!</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=100&h=100&fit=crop" class="w-9 h-9 rounded-full object-cover shrink-0" alt="kierannycla"><span class="text-white font-bold text-sm">kierannycla</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">I enjoyed working with Ibbad and his team. They took the time to help me get started on this project and find my style. I hope this becomes a long-term cooperation.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop" class="w-9 h-9 rounded-full object-cover shrink-0" alt="driesvdb"><span class="text-white font-bold text-sm">driesvdb</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">I've used Fiverr for several years and I can honestly say that Ibbad's work is top tier. In all aspects, the project and work he did far exceeded what I was expecting. Absolutely happy I chose to work with this seller! Will definitely be on-going!</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=100&h=100&fit=crop" class="w-9 h-9 rounded-full object-cover shrink-0" alt="kierannycla"><span class="text-white font-bold text-sm">kierannycla</span></div></div>
+                    </div>
+                </div>
+                <div class="testimonial-col scroll-up overflow-hidden">
+                    <div class="testimonial-track">
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">This is my first job with Ibbad and I am already planning to bring him six more! He is so professional, detail-oriented, and committed to the success of the project. I cannot say enough good things about his work!</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-9 h-9 rounded-full object-cover shrink-0" alt="jmhowethp"><span class="text-white font-bold text-sm">jmhowethp</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">All I can say is WOW. The quality of work was above and beyond what I could have expected. I've worked with numerous editors in the past, and non have understood exactly what I was going for and exceeded the expectation by this much. HIGHLY recommended.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=100&h=100&fit=crop" class="w-9 h-9 rounded-full object-cover shrink-0" alt="joshbrindley516"><span class="text-white font-bold text-sm">joshbrindley516</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">This is my first job with Ibbad and I am already planning to bring him six more! He is so professional, detail-oriented, and committed to the success of the project. I cannot say enough good things about his work!</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-9 h-9 rounded-full object-cover shrink-0" alt="jmhowethp"><span class="text-white font-bold text-sm">jmhowethp</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-2xl p-6 flex flex-col gap-4 text-left"><p class="text-white/80 font-inter text-[14px] leading-relaxed">All I can say is WOW. The quality of work was above and beyond what I could have expected. I've worked with numerous editors in the past, and non have understood exactly what I was going for and exceeded the expectation by this much. HIGHLY recommended.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=100&h=100&fit=crop" class="w-9 h-9 rounded-full object-cover shrink-0" alt="joshbrindley516"><span class="text-white font-bold text-sm">joshbrindley516</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+    <section class="py-16 md:py-20 bg-dark relative overflow-hidden" id="process">
+        <!-- Left Purple Glow -->
+        <div class="absolute top-1/2 left-0 w-[500px] h-[600px] bg-primary/30 rounded-full blur-[150px] pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
+
+        <div class="max-w-[1200px] mx-auto px-6 reveal relative z-10 flex flex-col items-center text-center">
+
+            <!-- Pill -->
+            <div class="inline-flex items-center justify-center px-4 py-1.5 border border-white/10 rounded-lg text-[13px] font-satoshi font-medium text-white mb-5 bg-transparent">
+                Process
+            </div>
+
+            <!-- Heading -->
+            <h2 class="font-satoshi font-bold text-3xl md:text-4xl lg:text-5xl text-white mb-12 tracking-tight">
+                Our <span class="font-instrument italic text-primary font-normal">3 Step Process</span>
+            </h2>
+
+            <!-- Process Steps Grid -->
+            <div class="w-full flex flex-col items-center gap-10 md:gap-14">
+
+                <!-- Top Row: Step 1 & 2 -->
+                <div class="grid md:grid-cols-2 gap-10 md:gap-16 w-full max-w-4xl">
+
+                    <!-- Step 1: Get on camera -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-14 h-14 mb-5 flex items-center justify-center">
+                            <svg class="w-12 h-12 text-primary" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="5" width="16" height="14" rx="2" fill="currentColor" opacity="0.3"/><rect x="3" y="6" width="14" height="12" rx="1.5" fill="currentColor"/><circle cx="10" cy="12" r="3" fill="#0a0a0a"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><rect x="6" y="3" width="4" height="3" rx="1" fill="currentColor"/></svg>
+                        </div>
+                        <h3 class="font-satoshi font-bold text-[20px] md:text-[22px] text-white mb-3">Get on camera</h3>
+                        <p class="font-satoshi text-[#999] text-[14px] md:text-[15px] leading-[1.7] max-w-[300px]">
+                            Set aside time to record, and we'll handle the video ideas and scripts. Our team will coach you on best practices for creating videos that convert.
+                        </p>
+                    </div>
+
+                    <!-- Step 2: We edit the videos -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-14 h-14 mb-5 flex items-center justify-center">
+                            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" fill="currentColor" opacity="0.15"/><rect x="4" y="4" width="16" height="16" rx="2" fill="currentColor" opacity="0.3"/><path d="M8 8h8v8H8z" fill="#0a0a0a" rx="1"/><path d="M15 4v4M19 8h-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+                        </div>
+                        <h3 class="font-satoshi font-bold text-[20px] md:text-[22px] text-white mb-3">We edit the videos</h3>
+                        <p class="font-satoshi text-[#999] text-[14px] md:text-[15px] leading-[1.7] max-w-[300px]">
+                            We'll turn your recordings into long and short-form videos, tailored to your goals. You'll have content to post daily or multiple times a day.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Bottom Row: Step 3 (Centered) -->
+                <div class="flex flex-col items-center text-center max-w-4xl w-full">
+                    <div class="w-14 h-14 mb-5 flex items-center justify-center">
+                        <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </div>
+                    </div>
+                    <h3 class="font-satoshi font-bold text-[20px] md:text-[22px] text-white mb-3">Post on all platforms</h3>
+                    <p class="font-satoshi text-[#999] text-[14px] md:text-[15px] leading-[1.7] max-w-[300px]">
+                        We'll take your videos and post them on all platforms. Sit back, relax, and watch the views, engagement, and conversions come in.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section class="py-16 md:py-20 bg-dark relative overflow-hidden" id="pricing">
+        <div class="max-w-7xl mx-auto px-6 reveal flex flex-col items-center">
+
+            <!-- Pill -->
+            <div class="inline-flex items-center justify-center px-4 py-1.5 border border-white/10 rounded-lg text-xs md:text-[13px] font-medium text-white mb-6 md:mb-8 bg-transparent cursor-default transition-colors hover:border-white/20 hover:bg-white/5">
+                Pricing
+            </div>
+
+            <!-- Heading -->
+            <h2 class="font-inter font-medium text-4xl md:text-5xl text-white mb-4 tracking-tight text-center">
+                Use our world-class video editors to <span class="font-cursive italic text-primary font-normal pr-1">grow faster.</span>
+            </h2>
+            <p class="text-gray-400 font-inter italic text-sm md:text-base mb-10 md:mb-14 text-center">
+                No job posts. No managing employees. No headaches.
+            </p>
+
+            <!-- Pricing Cards Grid -->
+            <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+
+                <!-- Starter Plan -->
+                <div class="bg-[#0c0c0c] border border-white/10 rounded-2xl p-8 flex flex-col">
+                    <h3 class="font-inter font-semibold text-xl text-white mb-4">Starter</h3>
+                    <div class="w-full h-[1px] bg-white/10 mb-6"></div>
+                    <div class="mb-6">
+                        <span class="font-inter font-bold text-5xl text-white">$1500</span>
+                        <span class="text-gray-400 text-sm ml-1">/month</span>
+                    </div>
+                    <a href="#contact" class="w-full border border-white/20 text-white text-center py-3 rounded-xl font-semibold text-sm hover:bg-white/5 transition-colors mb-8">
+                        Book a Call
+                    </a>
+                    <p class="text-gray-400 text-sm font-medium mb-4">What's included:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            15 video requests
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Unlimited revisions
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Personalized video branding
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Average 1-2 days turnaround
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Dedicated account manager
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Easy credit-card payments
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Pause or cancel anytime
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Growth Plan (Featured) -->
+                <div class="bg-[#0c0c0c] border border-primary/40 rounded-2xl p-8 flex flex-col relative overflow-hidden shadow-[0_0_40px_rgba(109,74,255,0.1)]">
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-purple-400"></div>
+                    <h3 class="font-inter font-semibold text-xl text-white mb-4">Growth</h3>
+                    <div class="w-full h-[1px] bg-white/10 mb-6"></div>
+                    <div class="mb-6">
+                        <span class="font-inter font-bold text-5xl text-primary">$2400</span>
+                        <span class="text-gray-400 text-sm ml-1">/month</span>
+                    </div>
+                    <a href="#contact" class="w-full border border-white/20 text-white text-center py-3 rounded-xl font-semibold text-sm hover:bg-white/5 transition-colors mb-8">
+                        Book a Call
+                    </a>
+                    <p class="text-gray-400 text-sm font-medium mb-4">What's included:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            15 video requests
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Unlimited revisions
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Personalized video branding
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Average 1-2 days turnaround
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Dedicated account manager
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Easy credit-card payments
+                        </li>
+                        <li class="flex items-center gap-3 text-white text-sm">
+                            <i data-lucide="check" class="w-4 h-4 text-primary shrink-0"></i>
+                            Pause or cancel anytime
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right Column: One-off Video + Book a Call -->
+                <div class="flex flex-col gap-6">
+                    <!-- One-off Video Card -->
+                    <div class="bg-[#0c0c0c] border border-white/10 rounded-2xl p-8 flex flex-col">
+                        <div class="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center mb-4">
+                            <i data-lucide="video" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <h3 class="font-inter font-semibold text-xl text-white mb-2">One-off Video ($180)</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">Not sure about the subscription? Try a single video</p>
+                        <a href="#contact" class="w-full border border-white/20 text-white text-center py-3 rounded-xl font-semibold text-sm hover:bg-white/5 transition-colors">
+                            Get your first video
+                        </a>
+                    </div>
+
+                    <!-- Book a Call Card -->
+                    <div class="bg-[#0c0c0c] border border-white/10 rounded-2xl p-8 flex flex-col">
+                        <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4">
+                            <i data-lucide="phone" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <h3 class="font-inter font-semibold text-xl text-white mb-2">Book a call</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">Learn more about how I can help your brand grow.</p>
+                        <a href="#contact" class="w-full border border-white/20 text-white text-center py-3 rounded-xl font-semibold text-sm hover:bg-white/5 transition-colors">
+                            Book a Call
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SCHEDULE CALL SECTION -->
+    <section class="relative py-16 md:py-20 bg-dark overflow-hidden" id="schedule">
+        <!-- Bottom Purple Glow -->
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1200px] h-[500px] bg-primary/30 rounded-full blur-[150px] pointer-events-none translate-y-1/2"></div>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <!-- Heading -->
+            <h2 class="font-inter font-medium text-4xl md:text-5xl lg:text-6xl text-white text-center mb-10 md:mb-14 tracking-tight">
+                Ready to <span class="font-cursive italic text-primary font-normal pr-1">Scale?</span> Let's Talk!
+            </h2>
+
+            <!-- Two Column Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-start">
+
+                <!-- Left Column: Calendly Embed -->
+                <div class="w-full rounded-2xl overflow-hidden border border-white/10 bg-white shadow-2xl min-h-[500px]">
+                    <iframe src="https://calendly.com" class="w-full h-[550px] border-0" loading="lazy"></iframe>
+                </div>
+
+                <!-- Right Column: Info -->
+                <div class="flex flex-col">
+                    <!-- Avatar -->
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-primary/40 mb-6">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop" class="w-full h-full object-cover" alt="Ibbad">
+                    </div>
+
+                    <p class="text-primary font-inter font-bold text-xs md:text-sm uppercase tracking-widest mb-3">Schedule Your Call With Ibbad Ul Haq</p>
+                    <h3 class="font-inter font-bold text-2xl md:text-3xl text-white mb-5 tracking-tight">Free 15-Minute Demo Call</h3>
+                    <p class="text-gray-400 font-inter text-sm md:text-[15px] leading-relaxed mb-4">
+                        Walk away with a clear understanding of the next steps to scale your brand through performance-driven video content — from high-converting ads to viral short-form.
+                    </p>
+                    <p class="text-gray-400 font-inter text-sm md:text-[15px] leading-relaxed mb-8">
+                        Find a time on my calendar to schedule your call today. I'd love to hear about your project and discuss how we can work together!
+                    </p>
+
+                    <!-- Perfect For List -->
+                    <p class="text-primary font-inter font-bold text-xs md:text-sm uppercase tracking-widest mb-5">This Consultation Call Is Perfect For:</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                            <span class="text-white text-sm md:text-[15px] leading-relaxed">DTC and e-commerce brands looking for <strong class="italic">high-converting ad creatives.</strong></span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                            <span class="text-white text-sm md:text-[15px] leading-relaxed">Content creators aiming to grow and <strong class="italic">scale their audience.</strong></span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                            <span class="text-white text-sm md:text-[15px] leading-relaxed">Brands that need <strong class="italic">performance-driven video ads</strong> with proven ROAS.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                            <span class="text-white text-sm md:text-[15px] leading-relaxed">Anyone seeking a reliable, dedicated <strong class="italic">video editing partner</strong> for long-term collaboration.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                            <span class="text-white text-sm md:text-[15px] leading-relaxed">Creators and brands looking for <strong class="italic">high-retention content</strong> that drives real engagement.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="py-16 md:py-20 bg-dark relative" id="faqs">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col items-center">
+
+            <!-- Heading -->
+            <h2 class="font-inter font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-10 md:mb-14 tracking-tight text-center">FAQs</h2>
+
+            <!-- FAQ List -->
+            <div class="w-full flex flex-col">
+
+                <!-- FAQ 1 -->
+                <div class="faq-item relative">
+                    <div class="faq-glow"></div>
+                    <button class="faq-question w-full flex items-center justify-between py-6 px-4 relative z-10 text-left" onclick="toggleFaq(this)">
+                        <span class="font-inter font-medium text-base md:text-lg text-white transition-colors">Do you offer any discounts for long-term contracts?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-white shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer relative z-10 px-4">
+                        <p class="text-gray-300 text-sm md:text-[15px] leading-relaxed pb-6">Yes, we offer special pricing for clients who commit to long-term contracts of at least one month. Please contact us to discuss the specifics of your project and contract duration.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item relative">
+                    <div class="faq-glow"></div>
+                    <button class="faq-question w-full flex items-center justify-between py-6 px-4 relative z-10 text-left" onclick="toggleFaq(this)">
+                        <span class="font-inter font-medium text-base md:text-lg text-white transition-colors">What is the typical process for starting a project with Ibbad Ul Haq?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-white shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer relative z-10 px-4">
+                        <p class="text-gray-300 text-sm md:text-[15px] leading-relaxed pb-6">We start with a discovery call to understand your goals and brand. From there, we create a content strategy, handle scripting and filming guidance, and deliver polished videos on a recurring basis.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item relative">
+                    <div class="faq-glow"></div>
+                    <button class="faq-question w-full flex items-center justify-between py-6 px-4 relative z-10 text-left" onclick="toggleFaq(this)">
+                        <span class="font-inter font-medium text-base md:text-lg text-white transition-colors">What tools and software do you use?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-white shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer relative z-10 px-4">
+                        <p class="text-gray-300 text-sm md:text-[15px] leading-relaxed pb-6">We primarily use Adobe Premiere Pro, After Effects, DaVinci Resolve, and Photoshop. For motion graphics and thumbnails we also use Figma and Illustrator.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item relative">
+                    <div class="faq-glow"></div>
+                    <button class="faq-question w-full flex items-center justify-between py-6 px-4 relative z-10 text-left" onclick="toggleFaq(this)">
+                        <span class="font-inter font-medium text-base md:text-lg text-white transition-colors">How do you ensure the quality of the videos?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-white shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer relative z-10 px-4">
+                        <p class="text-gray-300 text-sm md:text-[15px] leading-relaxed pb-6">Every video goes through a multi-step review process including internal QA, color grading checks, and audio mastering before delivery. We also offer unlimited revisions to ensure you're 100% satisfied.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="faq-item relative">
+                    <div class="faq-glow"></div>
+                    <button class="faq-question w-full flex items-center justify-between py-6 px-4 relative z-10 text-left" onclick="toggleFaq(this)">
+                        <span class="font-inter font-medium text-base md:text-lg text-white transition-colors">Do you offer hourly pricing?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-white shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer relative z-10 px-4">
+                        <p class="text-gray-300 text-sm md:text-[15px] leading-relaxed pb-6">No, we work on a project or monthly subscription basis. This ensures consistent quality and dedicated attention to your brand without the unpredictability of hourly billing.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="faq-item relative">
+                    <div class="faq-glow"></div>
+                    <button class="faq-question w-full flex items-center justify-between py-6 px-4 relative z-10 text-left" onclick="toggleFaq(this)">
+                        <span class="font-inter font-medium text-base md:text-lg text-white transition-colors">Why not hire your own editor?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-white shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer relative z-10 px-4">
+                        <p class="text-gray-300 text-sm md:text-[15px] leading-relaxed pb-6">Hiring a full-time editor means salaries, benefits, equipment costs, and management overhead. With us, you get an entire team of experts at a fraction of the cost with no long-term commitment.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="faq-item relative">
+                    <div class="faq-glow"></div>
+                    <button class="faq-question w-full flex items-center justify-between py-6 px-4 relative z-10 text-left" onclick="toggleFaq(this)">
+                        <span class="font-inter font-medium text-base md:text-lg text-white transition-colors">Can I request revisions?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-white shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer relative z-10 px-4">
+                        <p class="text-gray-300 text-sm md:text-[15px] leading-relaxed pb-6">Absolutely! All our plans include unlimited revisions. We work closely with you until every detail is exactly how you want it.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 8 -->
+                <div class="faq-item relative">
+                    <div class="faq-glow"></div>
+                    <button class="faq-question w-full flex items-center justify-between py-6 px-4 relative z-10 text-left" onclick="toggleFaq(this)">
+                        <span class="font-inter font-medium text-base md:text-lg text-white transition-colors">What is your refund policy?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-white shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer relative z-10 px-4">
+                        <p class="text-gray-300 text-sm md:text-[15px] leading-relaxed pb-6">We offer a satisfaction guarantee. If you're not happy with the work after revisions, we'll work with you to make it right or provide a partial refund based on the work completed.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 9 -->
+                <div class="faq-item relative">
+                    <div class="faq-glow"></div>
+                    <button class="faq-question w-full flex items-center justify-between py-6 px-4 relative z-10 text-left" onclick="toggleFaq(this)">
+                        <span class="font-inter font-medium text-base md:text-lg text-white transition-colors">How do I get started with Ibbad Ul Haq?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-white shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer relative z-10 px-4">
+                        <p class="text-gray-300 text-sm md:text-[15px] leading-relaxed pb-6">Simply book a free 15-minute demo call using the link above. We'll discuss your goals, recommend a plan, and get started right away!</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="relative bg-[#0a0a0a] pt-16 pb-10 overflow-hidden">
+        <!-- Purple glow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/30 rounded-full blur-[150px] pointer-events-none -translate-y-1/2"></div>
+
+        <div class="max-w-[1200px] mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
+
+                <!-- Left Column: Logo + Newsletter -->
+                <div class="md:col-span-5">
+                    <!-- Logo -->
+                    <a href="#" class="text-white hover:opacity-80 transition inline-block mb-6">
+                        <i data-lucide="fast-forward" class="w-8 h-8 fill-white"></i>
+                    </a>
+
+                    <h3 class="font-satoshi font-bold text-white text-[16px] mb-3">Join our newsletter</h3>
+                    <p class="font-satoshi text-[#999] text-[14px] leading-[1.6] mb-5 max-w-[360px]">
+                        Sign up to our mailing list below and be the first to know about new updates. Don't worry, we hate spam too.
+                    </p>
+
+                    <!-- Email Form -->
+                    <div class="flex items-center gap-3">
+                        <input type="email" placeholder="Your Email Address" class="bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-2.5 text-white text-[14px] font-satoshi placeholder:text-[#666] outline-none focus:border-primary/50 transition-colors w-[200px]">
+                        <a href="#" class="bg-primary text-white px-5 py-2.5 rounded-lg font-satoshi font-semibold text-[14px] flex items-center gap-2 hover:bg-[#5b3ce0] transition-colors">
+                            Get Notified
+                            <svg class="w-4 h-4 fill-none stroke-white" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Spacer -->
+                <div class="md:col-span-3"></div>
+
+                <!-- Links Column -->
+                <div class="md:col-span-2">
+                    <h4 class="font-satoshi font-bold text-white text-[15px] mb-4">Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#comparison" class="font-satoshi text-[#999] text-[14px] hover:text-white transition-colors">Services</a></li>
+                        <li><a href="#process" class="font-satoshi text-[#999] text-[14px] hover:text-white transition-colors">Process</a></li>
+                        <li><a href="#comparison" class="font-satoshi text-[#999] text-[14px] hover:text-white transition-colors">Comparison</a></li>
+                        <li><a href="#portfolio" class="font-satoshi text-[#999] text-[14px] hover:text-white transition-colors">Portfolio</a></li>
+                    </ul>
+                </div>
+
+                <!-- Information Column -->
+                <div class="md:col-span-2">
+                    <h4 class="font-satoshi font-bold text-white text-[15px] mb-4">Information</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#faqs" class="font-satoshi text-[#999] text-[14px] hover:text-white transition-colors">Faqs</a></li>
+                        <li><a href="#schedule" class="font-satoshi text-[#999] text-[14px] hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#about" class="font-satoshi text-[#999] text-[14px] hover:text-white transition-colors">About Us</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Schedule Button Particle Effect
+        (function() {
+            const container = document.getElementById('particles-container');
+            const btn = document.getElementById('schedule-btn');
+            if (!container || !btn) return;
+
+            const colors = [
+                'rgb(0, 255, 226)',
+                'rgb(164, 0, 255)',
+                'rgb(0, 16, 255)',
+                'rgb(0, 63, 255)',
+                'rgb(255, 0, 116)',
+                'rgb(255, 200, 0)',
+                'rgb(0, 255, 100)'
+            ];
+
+            // Create particles
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.backgroundColor = colors[i % colors.length];
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = (4 + Math.random() * 4) + 'px';
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+
+            function animateParticles() {
+                const particles = container.querySelectorAll('.particle');
+                particles.forEach(p => {
+                    const x = (Math.random() - 0.5) * 150;
+                    const y = (Math.random() - 0.5) * 40;
+                    p.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            }
+
+            // Animate on hover
+            btn.addEventListener('mouseenter', () => {
+                animateParticles();
+            });
+
+            // Reset on leave
+            btn.addEventListener('mouseleave', () => {
+                const particles = container.querySelectorAll('.particle');
+                particles.forEach(p => {
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.top = Math.random() * 100 + '%';
+                    p.style.transform = 'translate(0, 0)';
+                });
+            });
+
+            // Keep animating while hovered
+            let interval;
+            btn.addEventListener('mouseenter', () => {
+                interval = setInterval(animateParticles, 3000);
+            });
+            btn.addEventListener('mouseleave', () => {
+                clearInterval(interval);
+            });
+        })();
+
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // FAQ Toggle Logic
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            const wasOpen = item.classList.contains('open');
+
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+
+            // Re-init icons for closed state
+            lucide.createIcons();
+
+            // Open clicked one if it was closed
+            if (!wasOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        // Portfolio Tabs Logic
+        function switchTab(tabId) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('flex');
+            });
+            
+            // Dim all buttons
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('opacity-100', 'shadow-[0_0_20px_rgba(122,90,248,0.4)]');
+                el.classList.add('opacity-50');
+            });
+
+            // Show target content
+            const targetContent = document.getElementById(`content-${tabId}`);
+            if (targetContent) {
+                targetContent.classList.remove('hidden');
+                targetContent.classList.add('flex');
+            }
+
+            // Highlight target button
+            const targetBtn = document.getElementById(`tab-${tabId}`);
+            if (targetBtn) {
+                targetBtn.classList.remove('opacity-50');
+                targetBtn.classList.add('opacity-100', 'shadow-[0_0_20px_rgba(122,90,248,0.4)]');
+            }
+        }
+
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+
+        // Navbar: toggle between default and scrolled floating pill
+        const navDefault = document.getElementById('nav-default');
+        const navScrolled = document.getElementById('nav-scrolled');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navDefault.classList.add('opacity-0', 'pointer-events-none');
+                navScrolled.classList.remove('hidden');
+                navScrolled.classList.add('flex');
+                // Re-init lucide icons for the scrolled nav
+                lucide.createIcons();
+            } else {
+                navDefault.classList.remove('opacity-0', 'pointer-events-none');
+                navScrolled.classList.add('hidden');
+                navScrolled.classList.remove('flex');
+            }
+        });
+    </script>
+</body>
+</html>
