@@ -129,18 +129,27 @@
             animation-play-state: paused;
         }
 
-        /* Mobile horizontal testimonials */
+        /* Mobile horizontal testimonials — 3 rows */
         @keyframes scroll-left {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
         }
+        @keyframes scroll-right {
+            from { transform: translateX(-50%); }
+            to { transform: translateX(0); }
+        }
         .testimonial-mobile-track {
             display: flex;
-            gap: 1rem;
-            animation: scroll-left 25s linear infinite;
+            gap: 0.75rem;
         }
-        .testimonial-mobile-track:hover {
-            animation-play-state: paused;
+        .testimonial-mobile-track.scroll-left {
+            animation: scroll-left 40s linear infinite;
+        }
+        .testimonial-mobile-track.scroll-right {
+            animation: scroll-right 45s linear infinite;
+        }
+        .testimonial-mobile-track.scroll-left-slow {
+            animation: scroll-left 50s linear infinite;
         }
 
         /* FAQ Accordion */
@@ -859,23 +868,39 @@
         <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
             <div class="inline-flex items-center justify-center px-4 py-1.5 border border-white/10 rounded-lg text-xs md:text-[13px] font-satoshi font-medium text-white mb-6 md:mb-8 bg-transparent">Testimonials</div>
             <h2 class="font-satoshi font-bold text-[28px] md:text-[44px] lg:text-[56px] text-white leading-tight tracking-tight mb-10 md:mb-16 text-center">Hear from our Clients</h2>
-            <!-- Mobile: Horizontal scrolling marquee -->
-            <div class="md:hidden w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)]">
-                <div class="testimonial-mobile-track w-max">
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">I had some doubts at first but after I saw the first sample I was blown away! Phenomenal video editor right here. Definitely recommend</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="connan92"><span class="text-white font-bold text-xs">connan92</span></div></div>
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">This man doesn't deserve 5 stars, he deserves 100 stars. This man need an Oscar! The best of the best. Ibbad is the best!</p><div class="flex items-center gap-3 mt-1"><div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 text-sm font-bold border border-yellow-500/20">🎬</div><span class="text-white font-bold text-xs">andypr_787</span></div></div>
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">I enjoyed working with Ibbad and his team. They took the time to help me get started on this project and find my style.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="driesvdb"><span class="text-white font-bold text-xs">driesvdb</span></div></div>
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">Ibbad's work is top tier. The project and work he did far exceeded what I was expecting. Will definitely be on-going!</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="kierannycla"><span class="text-white font-bold text-xs">kierannycla</span></div></div>
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">This is my first job with Ibbad and I am already planning to bring him six more! He is so professional and committed.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="jmhowethp"><span class="text-white font-bold text-xs">jmhowethp</span></div></div>
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">All I can say is WOW. The quality of work was above and beyond. HIGHLY recommended.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="joshbrindley516"><span class="text-white font-bold text-xs">joshbrindley516</span></div></div>
-                    <!-- Duplicates for seamless loop -->
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">I had some doubts at first but after I saw the first sample I was blown away! Phenomenal video editor right here. Definitely recommend</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="connan92"><span class="text-white font-bold text-xs">connan92</span></div></div>
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">This man doesn't deserve 5 stars, he deserves 100 stars. This man need an Oscar! The best of the best. Ibbad is the best!</p><div class="flex items-center gap-3 mt-1"><div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 text-sm font-bold border border-yellow-500/20">🎬</div><span class="text-white font-bold text-xs">andypr_787</span></div></div>
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">I enjoyed working with Ibbad and his team. They took the time to help me get started on this project and find my style.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="driesvdb"><span class="text-white font-bold text-xs">driesvdb</span></div></div>
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">Ibbad's work is top tier. The project and work he did far exceeded what I was expecting. Will definitely be on-going!</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="kierannycla"><span class="text-white font-bold text-xs">kierannycla</span></div></div>
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">This is my first job with Ibbad and I am already planning to bring him six more! He is so professional and committed.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="jmhowethp"><span class="text-white font-bold text-xs">jmhowethp</span></div></div>
-                    <div class="bg-[#111] border border-white/5 rounded-2xl p-5 flex flex-col gap-3 text-left w-[280px] shrink-0"><p class="text-white/80 font-satoshi text-[13px] leading-relaxed">All I can say is WOW. The quality of work was above and beyond. HIGHLY recommended.</p><div class="flex items-center gap-3 mt-1"><img src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full object-cover shrink-0" alt="joshbrindley516"><span class="text-white font-bold text-xs">joshbrindley516</span></div></div>
+            <!-- Mobile: 3 rows of horizontal scrolling -->
+            <div class="md:hidden w-full flex flex-col gap-3 overflow-hidden">
+
+                <!-- Row 1: scrolls left -->
+                <div class="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
+                    <div class="testimonial-mobile-track scroll-left w-max">
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">I had some doubts at first but after I saw the first sample I was blown away! Phenomenal video editor. Definitely recommend</p><div class="flex items-center gap-2 mt-1"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover shrink-0" alt="connan92"><span class="text-white font-bold text-[11px]">connan92</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">This man doesn't deserve 5 stars, he deserves 100 stars. This man need an Oscar! The best of the best. I'm a repeated customer of him. Never disappoint!</p><div class="flex items-center gap-2 mt-1"><div class="w-7 h-7 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 text-xs border border-yellow-500/20">🎬</div><span class="text-white font-bold text-[11px]">andypr_787</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">I had some doubts at first but after I saw the first sample I was blown away! Phenomenal video editor. Definitely recommend</p><div class="flex items-center gap-2 mt-1"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover shrink-0" alt="connan92"><span class="text-white font-bold text-[11px]">connan92</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">This man doesn't deserve 5 stars, he deserves 100 stars. This man need an Oscar! The best of the best. I'm a repeated customer of him. Never disappoint!</p><div class="flex items-center gap-2 mt-1"><div class="w-7 h-7 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 text-xs border border-yellow-500/20">🎬</div><span class="text-white font-bold text-[11px]">andypr_787</span></div></div>
+                    </div>
                 </div>
+
+                <!-- Row 2: scrolls right (opposite direction) -->
+                <div class="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
+                    <div class="testimonial-mobile-track scroll-right w-max">
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">I enjoyed working with Ibbad and his team. They took the time to help me get started on this project and find my style. I hope this becomes a long-term cooperation.</p><div class="flex items-center gap-2 mt-1"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover shrink-0" alt="driesvdb"><span class="text-white font-bold text-[11px]">driesvdb</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">I've used Fiverr for several years and I can honestly say that Ibbad's work is top tier. Absolutely happy I chose to work with this seller!</p><div class="flex items-center gap-2 mt-1"><img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover shrink-0" alt="kierannycla"><span class="text-white font-bold text-[11px]">kierannycla</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">I enjoyed working with Ibbad and his team. They took the time to help me get started on this project and find my style. I hope this becomes a long-term cooperation.</p><div class="flex items-center gap-2 mt-1"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover shrink-0" alt="driesvdb"><span class="text-white font-bold text-[11px]">driesvdb</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">I've used Fiverr for several years and I can honestly say that Ibbad's work is top tier. Absolutely happy I chose to work with this seller!</p><div class="flex items-center gap-2 mt-1"><img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover shrink-0" alt="kierannycla"><span class="text-white font-bold text-[11px]">kierannycla</span></div></div>
+                    </div>
+                </div>
+
+                <!-- Row 3: scrolls left (slower) -->
+                <div class="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
+                    <div class="testimonial-mobile-track scroll-left-slow w-max">
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">This is my first job with Ibbad and I am already planning to bring him six more! He is so professional, detail-oriented, and committed to the success of the project.</p><div class="flex items-center gap-2 mt-1"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover shrink-0" alt="jmhowethp"><span class="text-white font-bold text-[11px]">jmhowethp</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">All I can say is WOW. The quality of work was above and beyond what I could have expected. HIGHLY recommended.</p><div class="flex items-center gap-2 mt-1"><img src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover shrink-0" alt="joshbrindley516"><span class="text-white font-bold text-[11px]">joshbrindley516</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">This is my first job with Ibbad and I am already planning to bring him six more! He is so professional, detail-oriented, and committed to the success of the project.</p><div class="flex items-center gap-2 mt-1"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover shrink-0" alt="jmhowethp"><span class="text-white font-bold text-[11px]">jmhowethp</span></div></div>
+                        <div class="bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col gap-2 text-left w-[260px] shrink-0"><p class="text-white/80 font-satoshi text-[12px] leading-relaxed">All I can say is WOW. The quality of work was above and beyond what I could have expected. HIGHLY recommended.</p><div class="flex items-center gap-2 mt-1"><img src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover shrink-0" alt="joshbrindley516"><span class="text-white font-bold text-[11px]">joshbrindley516</span></div></div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Desktop: Vertical scrolling 3 columns -->
@@ -933,8 +958,8 @@
 
                     <!-- Step 1: Get on camera -->
                     <div class="flex flex-col items-center text-center">
-                        <div class="w-14 h-14 mb-5 flex items-center justify-center">
-                            <svg class="w-12 h-12 text-primary" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="5" width="16" height="14" rx="2" fill="currentColor" opacity="0.3"/><rect x="3" y="6" width="14" height="12" rx="1.5" fill="currentColor"/><circle cx="10" cy="12" r="3" fill="#0a0a0a"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><rect x="6" y="3" width="4" height="3" rx="1" fill="currentColor"/></svg>
+                        <div class="w-20 h-20 md:w-24 md:h-24 mb-5 flex items-center justify-center">
+                            <video class="w-full h-full object-contain" src="https://roshanstudio.co/wp-content/uploads/2024/08/cameraAnimation2-1723414938225.webm" autoplay loop muted playsinline></video>
                         </div>
                         <h3 class="font-satoshi font-bold text-[20px] md:text-[22px] text-white mb-3">Get on camera</h3>
                         <p class="font-satoshi text-[#999] text-[14px] md:text-[15px] leading-[1.7] max-w-[300px]">
@@ -944,8 +969,8 @@
 
                     <!-- Step 2: We edit the videos -->
                     <div class="flex flex-col items-center text-center">
-                        <div class="w-14 h-14 mb-5 flex items-center justify-center">
-                            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" fill="currentColor" opacity="0.15"/><rect x="4" y="4" width="16" height="16" rx="2" fill="currentColor" opacity="0.3"/><path d="M8 8h8v8H8z" fill="#0a0a0a" rx="1"/><path d="M15 4v4M19 8h-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+                        <div class="w-20 h-20 md:w-24 md:h-24 mb-5 flex items-center justify-center">
+                            <video class="w-full h-full object-contain" src="https://roshanstudio.co/wp-content/uploads/2024/08/Animation-1723809985080.webm" autoplay loop muted playsinline></video>
                         </div>
                         <h3 class="font-satoshi font-bold text-[20px] md:text-[22px] text-white mb-3">We edit the videos</h3>
                         <p class="font-satoshi text-[#999] text-[14px] md:text-[15px] leading-[1.7] max-w-[300px]">
@@ -957,10 +982,8 @@
 
                 <!-- Bottom Row: Step 3 (Centered) -->
                 <div class="flex flex-col items-center text-center max-w-4xl w-full">
-                    <div class="w-14 h-14 mb-5 flex items-center justify-center">
-                        <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        </div>
+                    <div class="w-20 h-20 md:w-24 md:h-24 mb-5 flex items-center justify-center">
+                        <video class="w-full h-full object-contain" src="https://roshanstudio.co/wp-content/uploads/2024/08/fdN8rTg46c.webm" autoplay loop muted playsinline></video>
                     </div>
                     <h3 class="font-satoshi font-bold text-[20px] md:text-[22px] text-white mb-3">Post on all platforms</h3>
                     <p class="font-satoshi text-[#999] text-[14px] md:text-[15px] leading-[1.7] max-w-[300px]">
