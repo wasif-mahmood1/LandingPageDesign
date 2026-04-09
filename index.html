@@ -88,6 +88,31 @@
             z-index: 50;
         }
 
+        /* Hero Entrance Animations */
+        @keyframes slideInLeft {
+            from { transform: translate3d(-100%, 0, 0); opacity: 0; }
+            to   { transform: translate3d(0, 0, 0); opacity: 1; }
+        }
+        @keyframes slideInRight {
+            from { transform: translate3d(100%, 0, 0); opacity: 0; }
+            to   { transform: translate3d(0, 0, 0); opacity: 1; }
+        }
+        @keyframes slideInUp {
+            from { transform: translate3d(0, 80px, 0); opacity: 0; }
+            to   { transform: translate3d(0, 0, 0); opacity: 1; }
+        }
+        .hero-slide-left {
+            animation: slideInLeft 2s ease forwards;
+        }
+        .hero-slide-right {
+            animation: slideInRight 2s ease forwards;
+        }
+        .hero-slide-up {
+            opacity: 0;
+            animation: slideInUp 2s ease forwards;
+            animation-delay: 2s;
+        }
+
         /* Scroll Reveal Animation Classes */
         .reveal {
             opacity: 0;
@@ -95,6 +120,15 @@
             transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
         .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-slow {
+            opacity: 0;
+            transform: translateY(80px);
+            transition: all 2s ease 2s;
+        }
+        .reveal-slow.active {
             opacity: 1;
             transform: translateY(0);
         }
@@ -273,22 +307,22 @@
             <div class="flex flex-col lg:flex-row lg:items-center lg:gap-10">
 
                 <!-- Left Text Content -->
-                <div class="lg:w-[42%] flex flex-col justify-center mb-10 lg:mb-0">
+                <div class="lg:w-[42%] flex flex-col justify-center mb-10 lg:mb-0 hero-slide-left">
                     <div>
                         <span class="block font-satoshi font-medium text-white text-[35px] leading-[30px] mb-3">We help</span>
-                        <span class="block font-satoshi font-bold text-white text-[50px] md:text-[80px] leading-[42px] md:leading-[60px] mb-2">Content creators</span>
+                        <span class="block font-satoshi font-semibold text-white text-[50px] leading-[40px] mb-2" style="font-style: normal;">Content creators</span>
                         <span class="block font-satoshi font-extrabold text-[#999999] text-[35px] leading-[30px] my-3 ml-16">&amp;</span>
                         <span class="block font-satoshi font-bold text-white text-[50px] md:text-[80px] leading-[42px] md:leading-[60px] mb-2">Businesses</span>
                         <span class="block font-satoshi font-medium text-white text-[45px] leading-[37px] mt-3 mb-2">make</span>
                         <span class="block font-instrument italic text-[#765eff] text-[60px] md:text-[83px] leading-[48px] md:leading-[56px] mt-2">Viral Content</span>
                     </div>
-                    <p class="mt-6 font-satoshi italic font-medium text-[#999999] text-[15px] leading-[20px] max-w-[340px]">
+                    <p class="mt-6 font-satoshi italic font-medium text-[#999999] text-[15px] leading-[20px] max-w-[340px] hero-slide-up">
                         It's time to level up your content, boost your brand and go Viral
                     </p>
                 </div>
 
                 <!-- Right Video + CTAs -->
-                <div class="lg:w-[58%] flex flex-col relative z-10">
+                <div class="lg:w-[58%] flex flex-col relative z-10 hero-slide-right">
                     <!-- Video with subtle gradient border -->
                     <div class="relative w-full aspect-[16/9] rounded-2xl p-[2px] bg-gradient-to-br from-purple-500/40 via-white/5 to-cyan-400/20">
                         <div class="relative w-full h-full rounded-[14px] overflow-hidden bg-black">
@@ -297,7 +331,7 @@
                     </div>
 
                     <!-- CTA Buttons Below Video -->
-                    <div class="w-full flex justify-between items-center mt-5">
+                    <div class="w-full flex justify-between items-center mt-5 hero-slide-up">
                         <a href="#schedule" class="bg-[#765eff] text-white px-6 py-2.5 rounded-lg font-satoshi font-semibold flex items-center gap-2 hover:bg-[#6347ef] transition-colors text-[15px]">
                             Book a Call
                             <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
@@ -327,6 +361,7 @@
         </div>
 
         <!-- Marquee Track -->
+        <div class="max-w-7xl mx-auto px-6 overflow-hidden">
         <div class="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_20%,_black_80%,transparent_100%)]">
             <ul class="flex items-center justify-center md:justify-start [&_li]:mx-6 md:[&_li]:mx-8 animate-[infinite-scroll_35s_linear_infinite] whitespace-nowrap">
                 <li class="flex flex-col items-center gap-5">
@@ -445,13 +480,14 @@
                 </li>
             </ul>
         </div>
+        </div>
     </section>
 
     <!-- VIDEO TESTIMONIALS SECTION -->
     <section class="py-16 md:py-20 bg-dark relative" id="video-testimonials">
         <div class="max-w-[1200px] mx-auto px-6">
             <!-- Heading -->
-            <div class="text-center mb-10 md:mb-14 reveal">
+            <div class="text-center mb-10 md:mb-14 reveal-slow">
                 <h2 class="font-satoshi font-medium text-white text-[36px] md:text-[60px] leading-[40px] md:leading-[66px] tracking-tight mb-4">
                     Hear it directly from <span class="font-instrument italic text-[#765eff] font-normal">our clients</span>
                 </h2>
@@ -461,7 +497,7 @@
             </div>
 
             <!-- Video Testimonial Cards -->
-            <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto reveal" style="transition-delay: 0.2s">
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto reveal-slow">
 
                 <!-- Card 1 -->
                 <div class="relative bg-[#111] border border-white/10 rounded-2xl p-5 md:p-6 flex flex-col gap-5 group overflow-hidden">
@@ -553,7 +589,7 @@
 
     <!-- SERVICES SECTION -->
     <section class="py-16 md:py-20 bg-dark relative" id="services">
-        <div class="max-w-[1200px] mx-auto px-6 reveal flex flex-col items-center">
+        <div class="max-w-[1200px] mx-auto px-6 reveal-slow flex flex-col items-center">
 
             <!-- Pill -->
             <div class="inline-flex items-center justify-center px-4 py-3 border border-[#ffffff1a] rounded-xl font-satoshi font-medium text-white text-[16px] leading-[16px] mb-6">
@@ -1151,7 +1187,7 @@
 
         // Scroll Reveal Animation
         function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
+            var reveals = document.querySelectorAll(".reveal, .reveal-slow");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
